@@ -434,6 +434,17 @@ GIT_INLINE(double) git__timer(void)
    return (double)time * scaling_factor / 1.0E-9;
 }
 
+#elif AMIGA
+
+GIT_INLINE(double) git__timer(void)
+{
+	/* Fall back to using gettimeofday */
+	struct timeval tv;
+	struct timezone tz;
+	gettimeofday(&tv, &tz);
+	return (double)tv.tv_sec + (double)tv.tv_usec / 1E-6;
+}
+
 #else
 
 #include <sys/time.h>
