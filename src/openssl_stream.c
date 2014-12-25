@@ -181,7 +181,10 @@ static int verify_server_cert(SSL *ssl, const char *host)
 	unsigned char *peer_cn = NULL;
 	int matched = -1, type = GEN_DNS;
 	GENERAL_NAMES *alts;
+
+#ifndef AMIGA
 	struct in6_addr addr6;
+#endif
 	struct in_addr addr4;
 	void *addr;
 	int i = -1,j;
@@ -196,10 +199,12 @@ static int verify_server_cert(SSL *ssl, const char *host)
 		type = GEN_IPADD;
 		addr = &addr4;
 	} else {
+#ifndef AMIGA
 		if(p_inet_pton(AF_INET6, host, &addr6)) {
 			type = GEN_IPADD;
 			addr = &addr6;
 		}
+#endif
 	}
 
 
