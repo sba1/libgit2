@@ -429,6 +429,13 @@ static void hash_partially(git_indexer *idx, const uint8_t *data, size_t size)
 static int write_at(git_indexer *idx, const void *data, git_off_t offset, size_t size)
 {
 	git_file fd = idx->pack->mwf.fd;
+#ifdef NO_MMAP
+	if (p_lseek(fd, offset, SEEK_SET) == -1)
+		giterr_set(GITERR_OS, "lseek failed (error %d)", errno);
+	if (p_write(fd, data, size) != (int)size)
+		giterr_set(GITERR_OS, "write failed");
+	return 0;
+#else
 	size_t page_size;
 	size_t page_offset;
 	git_off_t page_start;
@@ -453,6 +460,7 @@ static int write_at(git_indexer *idx, const void *data, git_off_t offset, size_t
 	p_munmap(&map);
 
 	return 0;
+#endif
 }
 
 static int append_to_pack(git_indexer *idx, const void *data, size_t size)
