@@ -19,7 +19,11 @@
 #include "oidmap.h"
 #include "array.h"
 
+#ifdef AMIGA
+#define GIT_PACK_FILE_MODE 0666
+#else
 #define GIT_PACK_FILE_MODE 0444
+#endif
 
 #define PACK_SIGNATURE 0x5041434b	/* "PACK" */
 #define PACK_VERSION 2
