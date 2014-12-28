@@ -244,12 +244,14 @@ static int create_and_configure_origin(
 	const char *name;
 	char buf[GIT_PATH_MAX];
 
-	/* If the path exists and is a dir, the url should be the absolute path */
-	if (git_path_root(url) < 0 && git_path_exists(url) && git_path_isdir(url)) {
-		if (p_realpath(url, buf) == NULL)
-			return -1;
+	if (!git_transport_supported_proper_scheme(url)) {
+		/* If the path exists and is a dir, the url should be the absolute path */
+		if (git_path_root(url) < 0 && git_path_exists(url) && git_path_isdir(url)) {
+			if (p_realpath(url, buf) == NULL)
+				return -1;
 
-		url = buf;
+			url = buf;
+		}
 	}
 
 	name = options->remote_name ? options->remote_name : "origin";
