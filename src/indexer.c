@@ -470,11 +470,15 @@ static int append_to_pack(git_indexer *idx, const void *data, size_t size)
 	if (!size)
 		return 0;
 
+	/* If mmap is not used, ftruncate is not necessary
+	 * It also has problem on AmigaOS when used on RAM: */
+#ifndef NO_MMAP
 	/* add the extra space we need at the end */
 	if (p_ftruncate(idx->pack->mwf.fd, current_size + size) < 0) {
 		giterr_set(GITERR_OS, "Failed to increase size of pack file '%s'", idx->pack->pack_name);
 		return -1;
 	}
+#endif
 
 	return write_at(idx, data, idx->pack->mwf.size, size);
 }
