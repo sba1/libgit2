@@ -231,6 +231,12 @@ int git_remote_supported_url(const char* url)
 	return fn != &git_transport_dummy;
 }
 
+int git_transport_supported_proper_scheme(const char *url)
+{
+	transport_definition *definition;
+	return transport_find_proper_fn(&definition, url) != GIT_ENOTFOUND;
+}
+
 int git_transport_init(git_transport *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
