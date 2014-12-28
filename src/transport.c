@@ -46,7 +46,7 @@ static git_vector additional_transports = GIT_VECTOR_INIT;
 
 #define GIT_TRANSPORT_COUNT (sizeof(transports)/sizeof(transports[0])) - 1
 
-static int transport_find_fn(const char *url, git_transport_cb *callback, void **param)
+static int transport_find_proper_fn(transport_definition **out, const char *url)
 {
 	size_t i = 0;
 	unsigned priority = 0;
@@ -70,6 +70,19 @@ static int transport_find_fn(const char *url, git_transport_cb *callback, void *
 		if (definition_iter->priority > priority)
 			definition = definition_iter;
 	}
+
+	if (definition)
+	{
+		*out = definition;
+		return GIT_OK;
+	}
+	return GIT_ENOTFOUND;
+}
+
+static int transport_find_fn(const char *url, git_transport_cb *callback, void **param)
+{
+	transport_definition *definition = NULL;
+	transport_find_proper_fn(&definition, url);
 
 #ifdef GIT_WIN32
 	/* On Windows, it might not be possible to discern between absolute local
