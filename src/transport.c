@@ -218,3 +218,8 @@ int git_transport_init(git_transport *opts, unsigned int version)
 		opts, version, git_transport, GIT_TRANSPORT_INIT);
 	return 0;
 }
+
+int git_transport_has_url_supported_scheme(const char *url)
+{
+	return !!transport_find_by_url(url);
+}
