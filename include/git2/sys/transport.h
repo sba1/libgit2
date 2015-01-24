@@ -174,6 +174,17 @@ GIT_EXTERN(int) git_transport_register(
 GIT_EXTERN(int) git_transport_unregister(
 	const char *prefix);
 
+/**
+ * Checks whether the scheme given in the URL is supported.
+ *
+ * @param url The url that contains the scheme that should be checked.
+ * @return 1 if the scheme as given by the URL is supported otherwise 0. In
+ *  particular 0 is returned if this is a local path (without an scheme id).
+ */
+GIT_EXTERN(int) git_transport_has_url_supported_scheme(
+	const char *url
+	);
+
 /* Transports which come with libgit2 (match git_transport_cb). The expected
  * value for "param" is listed in-line below. */
 
