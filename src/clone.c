@@ -269,12 +269,14 @@ static int create_and_configure_origin(
 	git_remote_create_cb remote_create = options->remote_cb;
 	void *payload = options->remote_cb_payload;
 
-	/* If the path exists and is a dir, the url should be the absolute path */
-	if (git_path_root(url) < 0 && git_path_exists(url) && git_path_isdir(url)) {
-		if (p_realpath(url, buf) == NULL)
-			return -1;
+	if (!git_transport_has_url_supported_scheme(url)) {
+		/* If the path exists and is a dir, the url should be the absolute path */
+		if (git_path_root(url) < 0 && git_path_exists(url) && git_path_isdir(url)) {
+			if (p_realpath(url, buf) == NULL)
+				return -1;
 
-		url = buf;
+			url = buf;
+		}
 	}
 
 	if (!remote_create) {
