@@ -269,7 +269,7 @@ IF (WIN32 AND WINHTTP)
 	LINK_LIBRARIES(winhttp rpcrt4 crypt32 ole32)
 	LIST(APPEND LIBGIT2_PC_LIBS "-lwinhttp" "-lrpcrt4" "-lcrypt32" "-lole32")
 ELSE ()
-	IF (CURL)
+	IF (NOT AMIGA AND CURL)
 		PKG_CHECK_MODULES(CURL libcurl)
 	ENDIF ()
 
