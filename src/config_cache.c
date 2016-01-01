@@ -15,7 +15,7 @@
 
 struct map_data {
 	const char *cvar_name;
-	git_cvar_map *maps;
+	const git_cvar_map *maps;
 	size_t map_count;
 	int default_value;
 };
@@ -28,7 +28,7 @@ struct map_data {
  *	value is native. See gitattributes(5) for more information on
  *	end-of-line conversion.
  */
-static git_cvar_map _cvar_map_eol[] = {
+static const git_cvar_map _cvar_map_eol[] = {
 	{GIT_CVAR_FALSE, NULL, GIT_EOL_UNSET},
 	{GIT_CVAR_STRING, "lf", GIT_EOL_LF},
 	{GIT_CVAR_STRING, "crlf", GIT_EOL_CRLF},
@@ -45,13 +45,13 @@ static git_cvar_map _cvar_map_eol[] = {
  *	does not have normalized line endings. This variable can be set to input,
  *	in which case no output conversion is performed.
  */
-static git_cvar_map _cvar_map_autocrlf[] = {
+static const git_cvar_map _cvar_map_autocrlf[] = {
 	{GIT_CVAR_FALSE, NULL, GIT_AUTO_CRLF_FALSE},
 	{GIT_CVAR_TRUE, NULL, GIT_AUTO_CRLF_TRUE},
 	{GIT_CVAR_STRING, "input", GIT_AUTO_CRLF_INPUT}
 };
 
-static git_cvar_map _cvar_map_safecrlf[] = {
+static const git_cvar_map _cvar_map_safecrlf[] = {
 	{GIT_CVAR_FALSE, NULL, GIT_SAFE_CRLF_FALSE},
 	{GIT_CVAR_TRUE, NULL, GIT_SAFE_CRLF_FAIL},
 	{GIT_CVAR_STRING, "warn", GIT_SAFE_CRLF_WARN}
@@ -60,11 +60,11 @@ static git_cvar_map _cvar_map_safecrlf[] = {
 /*
  * Generic map for integer values
  */
-static git_cvar_map _cvar_map_int[] = {
+static const git_cvar_map _cvar_map_int[] = {
 	{GIT_CVAR_INT32, NULL, 0},
 };
 
-static struct map_data _cvar_maps[] = {
+static const struct map_data _cvar_maps[] = {
 	{"core.autocrlf", _cvar_map_autocrlf, ARRAY_SIZE(_cvar_map_autocrlf), GIT_AUTO_CRLF_DEFAULT},
 	{"core.eol", _cvar_map_eol, ARRAY_SIZE(_cvar_map_eol), GIT_EOL_DEFAULT},
 	{"core.symlinks", NULL, 0, GIT_SYMLINKS_DEFAULT },
@@ -83,7 +83,7 @@ static struct map_data _cvar_maps[] = {
 int git_config__cvar(int *out, git_config *config, git_cvar_cached cvar)
 {
 	int error = 0;
-	struct map_data *data = &_cvar_maps[(int)cvar];
+	const struct map_data *data = &_cvar_maps[(int)cvar];
 	git_config_entry *entry;
 
 	git_config__lookup_entry(&entry, config, data->cvar_name, false);
