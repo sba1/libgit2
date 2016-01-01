@@ -386,7 +386,7 @@ typedef void (*git_refcount_freeptr)(void *r);
 #define GIT_REFCOUNT_VAL(r) git_atomic_get(&((git_refcount *)(r))->refcount)
 
 
-static signed char from_hex[] = {
+static const signed char from_hex[] = {
 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 00 */
 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 10 */
 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 20 */
