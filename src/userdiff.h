@@ -42,7 +42,7 @@ typedef struct {
  * Word boundary patterns are just a simple pattern that will be OR'ed with
  * the default value above (i.e. whitespace or non-ASCII characters).
  */
-static git_diff_driver_definition builtin_defs[] = {
+static const git_diff_driver_definition builtin_defs[] = {
 
 IPATTERN("ada",
 	 "!^(.*[ \t])?(is[ \t]+new|renames|is[ \t]+separate)([ \t].*)?$\n"
