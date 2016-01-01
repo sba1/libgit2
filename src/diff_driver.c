@@ -53,7 +53,7 @@ struct git_diff_driver_registry {
 
 #define FORCE_DIFFABLE (GIT_DIFF_FORCE_TEXT | GIT_DIFF_FORCE_BINARY)
 
-static git_diff_driver global_drivers[3] = {
+static const git_diff_driver global_drivers[3] = {
 	{ DIFF_DRIVER_AUTO,   0, 0, },
 	{ DIFF_DRIVER_BINARY, GIT_DIFF_FORCE_BINARY, 0 },
 	{ DIFF_DRIVER_TEXT,   GIT_DIFF_FORCE_TEXT, 0 },
