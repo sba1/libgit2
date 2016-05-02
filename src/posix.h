@@ -10,6 +10,10 @@
 #include "common.h"
 #include <fcntl.h>
 #include <time.h>
+#ifdef __amigaos4__
+/* for struct timespec */
+#include <pthread.h>
+#endif
 #include "fnmatch.h"
 
 /* stat: file mode type testing macros */
